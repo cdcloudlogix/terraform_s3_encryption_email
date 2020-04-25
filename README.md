@@ -26,6 +26,8 @@ As an example, lets deploy this Lambda in main AWS account.
 ```hcl
 module "s3-encryption-lambda" {
   source = "./modules/s3-scan-encryption"
+
+  filename = "s3-encryption-payload.zip"
 }
 ```
 
@@ -38,7 +40,10 @@ module "s3-encryption-lambda" {
 ## Deployment
 
 As explained previously, this lambda is deployed by Terraform. All lambdas of this repository are tested and packaged by the script:
-- `modules/python_packages.sh`
+```bash
+cd modules
+./python_packages.sh
+```
 
 Run then the following:
 

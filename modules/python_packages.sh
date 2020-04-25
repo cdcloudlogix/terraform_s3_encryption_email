@@ -18,9 +18,9 @@ function install_packages() {
 
 function zip_python() {
   pushd s3-scan-encryption/
-  zip -r ../s3_encryption-payload.zip s3_encryption.py
+  zip -r ../s3-encryption-payload.zip s3_encryption.py
   popd
-  mv s3_encryption-payload.zip ../
+  mv s3-encryption-payload.zip ../
 }
 
 function test_python() {

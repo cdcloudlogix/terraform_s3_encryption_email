@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 # -----------------------------------------------------------
 # set up AWS Cloudwatch Event every Monday to Friday at 9am
 # -----------------------------------------------------------
@@ -45,14 +47,14 @@ resource "aws_lambda_function" "lambda_s3_encryption" {
   function_name    = var.lambda_function_name
   role             = aws_iam_role.lambda_s3_encryption_role.arn
   handler          = "s3_automated_encryption.lambda_handler"
-  source_code_hash = "${base64sha256(var.filename)}"
+  source_code_hash = base64sha256(var.filename)
   runtime          = "python3.7"
   timeout          = "300"
 
   environment {
     variables = {
       SNS_TOPIC_ARN = aws_cloudformation_stack.sns_topic.outputs["ARN"]
-      AWS_ACCOUNT   = var.assume_role_in_account_id
+      AWS_ACCOUNT   = data.aws_caller_identity.current.account_id
       S3_EXCEPTION  = var.ssm_s3_list_parameter
     }
   }
@@ -231,8 +233,8 @@ resource "aws_cloudformation_stack" "sns_topic" {
 data "template_file" "cloudformation_sns_stack" {
   template = file("${path.module}/email-sns-stack.json.tpl")
 
-  vars {
+  vars = {
     display_name  = data.aws_ssm_parameter.display_name.value
-    subscriptions = "${join("," , formatlist("{ \"Endpoint\": \"%s\", \"Protocol\": \"%s\" }", split(",", data.aws_ssm_parameter.s3_encryption_emails.value), var.protocol))}"
+    endpoint = var.email_address
   }
 }
