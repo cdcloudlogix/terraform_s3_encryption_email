@@ -5,12 +5,9 @@
       "Type" : "AWS::SNS::Topic",
       "Properties" : {
         "DisplayName" : "${display_name}",
-        "Subscription":
-          {
-            "Endpoint" : "${endpoint}",
-            "Protocol" : "email"
-          }
-        
+        "Subscription": [
+          ${subscriptions}
+        ]
       }
     }
   },
@@ -20,3 +17,4 @@
       "Value" : { "Ref" : "EmailSNSTopic" }
     }
   }
+}

@@ -57,7 +57,3 @@ variable "ssm_s3_list_parameter" {
   description = "(Optional) SSM Parameter name containing list of S3 buckets exempt from scanning. Default s3-encryption-exception-list"
   default     = "s3-encryption-exception-list"
 }
-
-variable "email_address" {
-  default = "bla@cdd.com"
-}

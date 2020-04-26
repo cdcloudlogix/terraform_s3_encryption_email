@@ -235,6 +235,6 @@ data "template_file" "cloudformation_sns_stack" {
 
   vars = {
     display_name  = data.aws_ssm_parameter.display_name.value
-    endpoint = var.email_address
+    subscriptions = "${join("," , formatlist("{ \"Endpoint\": \"%s\", \"Protocol\": \"%s\" }", split(",", data.aws_ssm_parameter.s3_encryption_emails.value), var.protocol))}"
   }
 }
