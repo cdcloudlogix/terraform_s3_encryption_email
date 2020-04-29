@@ -6,6 +6,8 @@ This Terraform repository would provide a lambda which will scan S3 Buckets and 
 
 ![Image](lambda-s3encryption.png?raw=true)
 
+You can also follow the following [guideline](https://medium.com/@obutterbach/scan-and-set-server-side-encryption-on-all-of-your-s3-buckets-with-terraform-4267b7483e0e) for more information
+
 ## Installation
 
 This is controlled and deployed by Terraform, just indicate the source module in the root of this repository. This module requires access to the following SSM parameter (StringList):
